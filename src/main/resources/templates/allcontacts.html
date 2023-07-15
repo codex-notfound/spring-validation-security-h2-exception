@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+  <head>
+    <title>Contact List</title>
+    <style>
+      ul {
+        list-style-type: none;
+        margin: 0;
+        padding: 0;
+        overflow: hidden;
+        background-color: #333;
+        position: fixed;
+        top: 0;
+        width: 100%;
+      }
+
+      li {
+        float: left;
+      }
+
+      li a {
+        display: block;
+        color: white;
+        text-align: center;
+        padding: 14px 16px;
+        text-decoration: none;
+      }
+
+      li a:hover:not(.active) {
+        background-color: #111;
+      }
+
+      .active {
+        background-color: #04aa6d;
+      }
+    </style>
+  </head>
+  <body>
+    <div th:replace="~{header :: header}">...</div>
+    <h1 style="text-align: center; margin-top: 100px">Contact List</h1>
+    <table style="width: 100%; text-align: center">
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Email</th>
+          <th>Phone</th>
+          <th>Message</th>
+          <th></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr th:each="contact : ${contacts}">
+          <td th:text="${contact.name}"></td>
+          <td th:text="${contact.email}"></td>
+          <td th:text="${contact.phone}"></td>
+          <td th:text="${contact.message}"></td>
+          <td>
+            <a
+              th:href="@{/contacts/{id}/edit(id=${contact.id})}"
+              style="background-color: #04aa6d; color: white; padding: 5px 10px"
+            >
+              Edit
+            </a>
+            <form
+              th:action="@{/contacts/{id}/delete(id=${contact.id})}"
+              method="POST"
+            >
+              <button
+                type="submit"
+                style="background-color: red; color: white; padding: 5px 10px"
+              >
+                Delete
+              </button>
+            </form>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </body>
+</html>
